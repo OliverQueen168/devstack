@@ -7,10 +7,14 @@ BACKEND_SERVICE_EDX_OAUTH2_PROVIDER_URL: http://127.0.0.1:8000/oauth2
 BACKEND_SERVICE_EDX_OAUTH2_SECRET: analytics_api-backend-service-secret
 CACHES:
     default:
-        BACKEND: django.core.cache.backends.memcached.MemcachedCache
+        BACKEND: django.core.cache.backends.memcached.PyMemcacheCache
         KEY_PREFIX: analytics_api
         LOCATION:
         - memcache
+        OPTIONS:
+            no_delay: true
+            ignore_exc: true
+            use_pooling: true
 CSRF_COOKIE_SECURE: false
 DATABASES:
     default:
@@ -43,7 +47,6 @@ EXTRA_APPS: []
 JWT_AUTH:
     JWT_AUTH_COOKIE_HEADER_PAYLOAD: edx-jwt-cookie-header-payload
     JWT_AUTH_COOKIE_SIGNATURE: edx-jwt-cookie-signature
-    JWT_AUTH_REFRESH_COOKIE: edx-jwt-refresh-cookie
     JWT_ISSUERS:
     -   AUDIENCE: SET-ME-PLEASE
         ISSUER: http://127.0.0.1:8000/oauth2
